@@ -8,14 +8,25 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-    const student = {
-        name: "Jacky"
+    const studentFind = students.find((student) => {
+        return student.name === req.body.name
+    })
+
+    // console.log(studentFind)
+
+    if(!studentFind){
+        const student = {
+            name: req.body.name
+        }
+        students.push(student)
+        res.json(student)
+        console.log(student)
+    }else{
+        res.status(409).json("Student already exist");
     }
 
-    students.push(student)
-
-    res.json(student)
 })
+
 
 app.get('/', (req, res) => {
     res.json(students)
